@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>展展_展覽資訊網</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/all.min.css">
+
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    .fw-100 {
+      font-weight: 100;
+    }
+
+    .fw-300 {
+      font-weight: 300;
+    }
+
+    .fw-400 {
+      font-weight: 400;
+    }
+
+    .fw-500 {
+      font-weight: 500;
+    }
+
+    .fw-700 {
+      font-weight: 700;
+    }
+
+    .fw-900 {
+      font-weight: 900;
+    }
+
+    .bg-cover {
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .carousel-caption {
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0.5px 0.5px 5px 1px aqua;
+      /* box-shadow: X軸 Y軸 模糊度 邊框(厚度) 顏色 */
+      /* 相反方向則用負數 */
+    }
+
+    .btn-modal {
+      z-index: 5;
+    }
+
+    .s09_text {
+      z-index: 10;
+
+      background-color: rgba(246, 246, 246, 0.7);
+      margin: 15px;
+      padding: 15px;
+      border-radius: 15px;
+      color: rgb(71, 71, 71);
+    }
+
+    .s11_text {
+      z-index: 10;
+
+      background-color: rgba(246, 246, 246, 0.8);
+      margin: 15px;
+      padding: 15px;
+      border-radius: 15px;
+      color: rgb(71, 71, 71);
+    }
+
+    @media screen and (max-width: 768px) {
+
+      .s05_text,
+      .s06_text,
+      .s07_text {
+        z-index: 10;
+
+        background-color: rgba(0, 0, 0, 0.5);
+        margin: 15px;
+        padding: 15px;
+        border-radius: 15px;
+        color: white;
+      }
+
+      .s05_img,
+      .s07_img {
+        right: 0;
+      }
+
+      .s06_img {
+        left: 0;
+      }
+    }
+
+    /* icon小動畫 */
+    .fa-solid {
+      -webkit-animation: shake 1s infinite;
+      animation: shake 1.5s infinite;
+
+      -webkit-transform-origin: 50% 100%;
+      transform-origin: 50% 100%;
+    }
+
+    @-webkit-keyframes shake {
+      50% {
+        -webkit-transform: rotate(-10deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(10deg);
+      }
+    }
+
+    @keyframes shake {
+      50% {
+        -webkit-transform: rotate(-10deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(10deg);
+      }
+    }
+
+    /* timeline */
+    .timeline-section {
+      position: relative;
+    }
+
+    .timeline-section::before {
+      position: absolute;
+      content: "";
+      top: 0;
+      bottom: 0;
+      /* 線的粗度 */
+      width: 3px;
+      /* 漸層色使用在背景圖片上 */
+      background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.9));
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .timeline-section-pointer {
+      position: relative;
+    }
+
+    .timeline-section-pointer::before {
+      position: absolute;
+      content: "";
+      top: 50;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      left: 50%;
+      background-color: #ffffff;
+      border: 4px solid rgba(0, 0, 0, 0.8);
+      transform: translateX(-50%);
+    }
+
+    .timeline-section-pointer:hover::before {
+      width: 30px;
+      height: 30px;
+      border: 10px solid rgba(0, 0, 0, 0.9);
+    }
+
+    @media screen and (max-width: 768px) {
+
+      .timeline-section::before,
+      .timeline-section-pointer::before {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- s01 分享icon -->
+  <section class="bg-dark">
+    <div class="container">
+      <div class="text-end">
+        <a href="#"><i class="fa-brands fa-square-facebook text-white"></i></a>
+        <a href="#"><i class="fa-brands fa-square-x-twitter text-white"></i></a>
+        <a href="#"><i class="fa-brands fa-square-instagram text-white"></i></a>
+      </div>
+    </div>
+  </section>
+  <!-- s02 Navbar -->
+  <section class="bg-dark">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg bg-dark navbar-dark" style="z-index: 10;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">
+            <i class="fa-sharp fa-solid fa-ticket text-bg-dark"></i>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">首頁</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  關於展展
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#s05_feature">展區特色</a></li>
+                  <li><a class="dropdown-item" href="#s06_value">展覽價值</a></li>
+                  <li><a class="dropdown-item" href="#s07_work">展場合作</a></li>
+                  <li><a class="dropdown-item" href="#s08_special">展區規劃</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#s10_form">填寫看展表單</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#s09_friend">尋友看展</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <a href="#" class="btn btn-info me-1 btn-modal" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">登入</a>
+              <a href="#" class="btn btn-outline-info btn-modal" data-bs-toggle="modal"
+                data-bs-target="#regModal">註冊</a>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+  <!-- loginModal -->
+  <!-- Modal 登入表單-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header text-white">
+          <h1 class="modal-title fs-5 text-secondary" id="exampleModalLabel">會員登入</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="" class="from-label text-secondary">帳號</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="" class="from-label text-secondary">密碼</label>
+            <input type="password" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" data-bs-toggle="modal" data-bs-target="#regModal" class="me-auto text-info">未註冊帳號，點擊註冊!</a>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-info text-white">確認</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- regModal 註冊表單 -->
+  <div class="modal fade" id="regModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header text-white">
+          <h1 class="modal-title fs-5 text-secondary" id="exampleModalLabel">會員註冊</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-7 my-2">
+              <h6 class="fw-100">本平台告知事項：本平台現在或將來蒐集用戶提供之個人資料，依據我國相關個人資料保護規定及公司內部規範。</h6>
+              <h6 class="fw-100">1. 隱私政策：<br>用戶需要同意平台的隱私政策，明確描述平台如何處理個人數據、隱私保護措施等。</h6>
+              <h6 class="fw-100">2. 帳戶安全：<br>不分享帳戶信息等，禁止用戶提供虛偽或不正確的註冊信息、禁止用戶擁有多個重複帳戶。</h6>
+              <h6 class="fw-100">3.知識產權：<br>確定用戶了解並尊重知識產權，不得在平台上侵犯他人的版權、商標等權利。</h6>
+              <div class="from-check mt-4">
+                <input type="checkbox" class="form-check-input me-1">
+                <label for="" class="form-check-label text-info">同意註冊規範</label>
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="mb-3">
+                <label for="" class="from-label text-secondary">帳號</label>
+                <input type="text" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="" class="from-label text-secondary">密碼</label>
+                <input type="password" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="" class="from-label text-secondary">確認密碼</label>
+                <input type="password" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="" class="from-label text-secondary">Email</label>
+                <input type="email" class="form-control">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="me-auto text-info">已擁有帳號，直接登入!</a>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-info text-white">確認</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- s03 carouse 輪播圖 -->
+  <section class="carouse">
+    <div id="carouselExampleDark" class="carousel carousel-white slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item bg-cover active" style="background-image: url(images/banner01.jpg); height: 580px;">
+          <div class="carousel-caption d-none d-md-block">
+            <h5 class=".fw-400">01.主題合作</h5>
+            <p>各種機構或個人可以基於共同的主題或概念合作籌辦展覽。這種合作可以增強展覽的內容連貫性，同時也能夠在特定主題上引起更多的關注。</p>
+          </div>
+        </div>
+        <div class="carousel-item bg-cover" style="background-image: url(images/banner02.jpg); height: 580px; ">
+          <div class="carousel-caption d-none d-md-block">
+            <h5 class=".fw-400">02.藝術家合作</h5>
+            <p>不同藝術家可以合作參與展覽，共同展示他們的作品。這種合作有助於藝術家之間的交流與合作，同時也能夠為觀眾呈現多種風格和視角。</p>
+          </div>
+        </div>
+        <div class="carousel-item bg-cover" style="background-image: url(images/banner03.jpg); height: 580px; ">
+          <div class="carousel-caption d-none d-md-block">
+            <h5 class=".fw-400">03.贊助商合作</h5>
+            <p>企業、基金會或贊助商可以贊助展覽活動，提供資金或資源支持。這種合作可以幫助提升展覽的質量和範圍，同時也能夠獲得合作方的宣傳和回報。</p>
+          </div>
+        </div>
+        <div class="carousel-item bg-cover" style="background-image: url(images/banner04.jpg); height: 580px; ">
+          <div class="carousel-caption d-none d-md-block">
+            <h5 class=".fw-400">04.策展人合作</h5>
+            <p>不同策展人可以合作籌劃展覽，結合各自的專業知識和經驗，打造更具深度和創意的展覽。</p>
+          </div>
+        </div>
+        <div class="carousel-item bg-cover" style="background-image: url(images/banner05.jpg); height: 580px; ">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>05.跨機構合作</h5>
+            <p>不同藝術機構、博物館、畫廊、文化中心等可以合作舉辦大型或小型的展覽活動。這種合作可以讓不同機構共享資源，增加展覽的多樣性和豐富性。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" style="margin-bottom: 18%;"
+      data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" style="margin-bottom: 18%;"
+      data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+    </div>
+  </section>
+  <!-- s04 三大服務項目 01展場設施 02親子展區 03線上藝廊 | 互動icon-->
+  <section class="py-5 bg-info">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center p-3">
+          <i class="fa-solid fa-cube fa-4x text-warning s04_icon"></i>
+          <div class="d-none d-md-block">
+            <h4 class="my-3 fw-500 text-white">展場設施</h4>
+          </div>
+        </div>
+        <div class="col-md-4 text-center p-3">
+          <i class="fa-solid fa-icons fa-4x text-warning"></i>
+          <div class="d-none d-md-block">
+            <h4 class="my-3 fw-500 text-white">親子展區</h4>
+          </div>
+        </div>
+        <div class="col-md-4 text-center p-3">
+          <i class="fa-solid fa-headset fa-4x text-warning"></i>
+          <div class="d-none d-md-block">
+            <h4 class="my-3 fw-500 text-white">線上藝廊</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- s05 展區特色 -->
+  <section id="s05_feature" style="position:relative;">
+    <div class="row">
+      <div class="col-md-5 bg-cover s05_img" style="position: absolute;
+    top:0; bottom: 0; background-image: url(images/s05.jpg);">
+      </div>
+    </div>
+    <div class="container">
+      <div class="row justify-content-end">
+        <div class="col-md-7 s05_text">
+          <h3 class="fw-400 mt-5">展區特色</h3>
+          <p class="fw-100">
+            展覽作為文化與藝術領域的一種活動，具有許多重要的價值和意義。文化傳承與教育、創意與藝術推廣、社會互動與交流、文化交流、創新與突破，不同的展覽可能會強調其中的某些方面，展覽對於社會和文化的發展具有重要的影響。</p>
+          <a href="#" class="btn btn-outline-info">more...</a>
+          <div class="row my-5">
+            <div class="col-md-6">
+              <h5 class="fw-400">教育性質</h5>
+              <p class="fw-100">
+                親子展區的設計旨在提供教育性的體驗，通過遊戲和互動來傳授知識、鼓勵探索和學習，讓家庭一起參與藝術和文化體驗，促進親子關係，並在一個有趣的環境中建立共同的回憶。</p>
+            </div>
+            <div class="col-md-6">
+              <h5 class="fw-400">展場互動性</h5>
+              <p class="fw-100">展示可以是觸摸螢幕、遊戲等，包括多媒體元素，如影片、音樂和動畫，以吸引注意力。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- s06 展覽價值  -->
+  <section id="s06_value" class="my-5" style="position: relative;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7 s06_text">
+          <dl class="row">
+            <h3 class="fw-400">展覽價值</h3>
+            <p class="fw-300">展覽作為文化與藝術領域的一種活動，具有許多重要的價值和意義。</p>
+            <dt class="col-sm-3 fw-100">文化傳承與教育：</dt>
+            <dd class="col-sm-9 fw-100">展覽透過展示歷史、文化、藝術等方面的內容，傳達知識，幫助觀眾了解不同領域的背景和發展，促進文化傳承和教育。</dd>
+
+            <dt class="col-sm-3 fw-100">創意與藝術推廣：</dt>
+            <dd class="col-sm-9 fw-100">
+              <p>展覽為藝術家、設計師、創作者等提供了展示他們作品的平台，有助於推廣和傳播他們的創意和藝術作品。</p>
+              <p>展覽是觀眾與藝術家、創作者、專家學者之間交流的機會。參觀者可以與展品互動，同時也有機會在展覽現場與其他觀眾交流分享觀點。</p>
+            </dd>
+
+            <dt class="col-sm-3 fw-100">社會意識與探討：</dt>
+            <dd class="col-sm-9 fw-100">展覽可以透過展示社會問題、環境議題等引發觀眾對於重要議題的關注，推動社會意識的提升和探討。</dd>
+
+            <dt class="col-sm-3 text-truncate fw-100">文化交流：</dt>
+            <dd class="col-sm-9 fw-100">國際展覽可以促進不同文化之間的交流與理解，擴大國際間的影響力，加強文化外交與國際合作。</dd>
+          </dl>
+          </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-md-5 bg-cover s06_img"
+        style="position: absolute; background-image: url(images/s06.jpg); top: 0; bottom: 0;">
+      </div>
+    </div>
+  </section>
+  <!-- s07 展場合作與租借 -->
+  <section id="s07_work" style="position:relative;">
+    <div class="row mt-5">
+      <div class="col-md-5 bg-cover s07_img" style="position: absolute;
+  top:0;
+  bottom: 0;
+  background-image: url(images/s07.jpg);">
+      </div>
+    </div>
+    <div class="container">
+      <div class="row justify-content-end">
+        <div class="col-md-7">
+          <div class="row mt-5">
+            <div class="col-11 s07_text">
+              <h3 class="fw-400">展場合作與租借</h3>
+              <p class="fw-100">不同機構、組織或個人之間合作舉辦、籌劃或參與展覽活動的行為。這種合作可以在不同層面和範疇進行，旨在共同實現特定的目標，並加強展覽的品質和影響力。</p>
+            </div>
+            <div class="col-md-11 my-5 s07_text text-dark" style="border-radius: 20px; padding: 10px;"> 
+              <div class="row counter text-center">
+                <div class="col-3">
+                <h5>展場租借</h5>
+                  <h2 class="fw-700 counter01">103</h2>
+                </div>
+                <div class="col-3">
+                <h5>合作次數</h5>
+                  <h2 class="fw-700 counter02">527</h2>
+                </div>
+                <div class="col-3">
+                  <h5>展友人數</h5>
+                  <h2 class="fw-700 counter03">2077</h2>
+                </div>
+                <div class="col-3">
+                  <h5>累積展次</h5>
+                  <h2 class="fw-700 counter04">945</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+  <!-- s08 特展展區介紹 文藝展區 歷史展區 互動展區 燈光展區-->
+  <section id="s08_special">
+    <div class="container">
+      <div class="row my-5">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-gamepad fa-6x me-4 text-primary"></i>
+            <div>
+              <h4 class="fw-300">文藝展區</h4>
+              <p class="fw-300">展覽為藝術家、設計師、創作者等提供了展示他們作品的平台，有助於推廣和傳播他們的創意和藝術作品。</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-gamepad fa-6x me-4 text-warning"></i>
+            <div>
+              <h4 class="fw-300">歷史展區</h4>
+              <p class="fw-300">展覽透過展示歷史、文化、藝術等方面的內容，傳達知識，幫助觀眾了解不同領域的背景和發展，促進文化傳承和教育。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row my-5">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-gamepad fa-6x me-4 text-danger"></i>
+            <div>
+              <h4 class="fw-300">互動展區</h4>
+              <p class="fw-300">展覽可以透過展示社會問題、環境議題等引發觀眾對於重要議題的關注，推動社會意識的提升和探討。</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-gamepad fa-6x me-4 text-success"></i>
+            <div>
+              <h4 class="fw-300">燈光展區</h4>
+              <p class="fw-300">展覽是觀眾與藝術家、創作者、專家學者之間交流的機會。參觀者可以與展品互動，同時也有機會在展覽現場與其他觀眾交流分享觀點。</p>
+              </p>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- s09 時間軸 & 看展好朋友 -->
+  <section id="s09_friend">
+    <div class="timeline-bg bg-cover mt-3 p-5"
+      style="background-image: url(images/s11-1.jpg); background-attachment: fixed;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 d-flex align-items-start">
+            <div class="s09_text">
+              <h3>看展好朋友</h3>
+              <p>身邊沒有可以一起去看展覽嗎？我有興趣，而朋友剛好沒興趣？快來家務看展好朋友！透過看展認識喜歡同個展覽的新朋友！</p>
+            </div>
+          </div>
+          <div class="col-md-9 timeline-section">
+            <div class="row align-items-center timeline-section-pointer">
+              <div class="col-md-6 text-left">
+                <div class="mytext s09_text">
+                  <h4 class="fw-500">01.選取有興趣的展次</h4>
+                  <p class="fw-400">填寫線上表單，選取有興趣的場次與展場內容。</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="row align-items-center flex-row-reverse timeline-section-pointer">
+              <div class="col-md-6 text-left">
+                <div class="mytext s09_text">
+                  <h4 class="fw-500">02.線上加入專屬群組</h4>
+                  <p class="fw-400">表單送出後，三至五天內，將收到群組Qrcode，掃描加入，找到同場次的看展好朋友！</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="row align-items-center timeline-section-pointer">
+              <div class="col-md-6 text-left">
+                <div class="mytext  s09_text">
+                  <h4 class="fw-500">03.規劃行程
+                  </h4>
+                  <p class="fw-400">一起規劃當天行程，例如：早上十點到展場門口集合。</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="row align-items-center flex-row-reverse timeline-section-pointer">
+              <div class="col-md-6 text-left">
+                <div class="mytext s09_text">
+                  <h4 class="fw-500">04.一起與展友逛展吧!</h4>
+                  <p class="fw-400">在約定好的時間，準時出現，與看展好朋友們一起享受展場吧！</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </section>
+  <!-- s10 地圖+看展好朋友表單 -->
+  <section id="s10_form">
+    <div class="container">
+      <div class="row mt-3 align-items-center">
+        <div class="col-md-6">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3641.092353722594!2d120.67720358885497!3d24.1333946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34693d1042abccf9%3A0x71ee765369fc0909!2z5paH5YyW6YOo5paH5YyW6LOH55Si5ZyS5Y2A!5e0!3m2!1szh-TW!2stw!4v1692234982672!5m2!1szh-TW!2stw"
+            width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="col-md-6 justify-content-end">
+          <h4 class="fw-500 text-info mb-3">看展好朋友表單 Friend Form</h4>
+          <div class="mb-3">
+            <label for="" class="form-label">您的稱呼:</label>
+            <input type="text" class="form-control" placeholder="Name">
+          </div>
+          <div class="mb-3">
+            <label for="">您的信箱:</label>
+            <input type="text" class="form-control" placeholder="Mail">
+          </div>
+          <div class="mb-3">
+            <select class="form-control">
+              <option>請選擇喜歡的展覽類型</option>
+              <option>藝文</option>
+              <option>奇幻</option>
+              <option>親子</option>
+              <option>互動式</option>
+              <option>燈影效果</option>
+              <option>歷史古蹟</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="">對於展覽的喜愛程度:</label>
+            <input type="number" min="1" max="10" class="form-control" placeholder="(1-10分)">
+          </div>
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                非常喜歡我們提供的展覽資訊
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+              <label class="form-check-label" for="flexCheckChecked">
+                希望展覽資訊可以有更多元的主題
+              </label>
+            </div>
+            <div class="text-end my-3">
+              <a href="#" class="btn btn-outline-info">取消</a>
+              <a href="#" class="btn btn-info text-white">送出</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- s11 職缺徵人訊息 -->
+  <section class="mt-5">
+    <div class="row">
+      <div class="col-md-6 bg-cover" style="background-image: url(images/s11-2.jpg);">
+        <div class="row justify-content-center p-5">
+          <div class="col-md-9 s11_text m-4 p-3">
+            <small class="badge text-info">JOIN US</small>
+            <h2 class="fw-400 m-2">展場櫃台人員</h2>
+            <ul class="fw-300">
+              <li>接待：負責接待來訪者，確認他們的身份或預先註冊信息，並向他們提供入場證。</li>
+              <li>解答查詢：回答訪客或參展商的問題，包括展覽活動的日程、參展商信息或其他常見問題。</li>
+              <li>指引方向：協助訪客找到感興趣的展位，或引導到洽談室、休息區、洗手間等場所。</li>
+              <li>處理突發情況：應對任何突發狀況，如訪客失物、註冊問題或其他緊急事件。</li>
+              <li>收集反饋：收集訪客的反饋或評價，以改善未來的展覽體驗。</li>
+            </ul>
+            <div class="text-end mx-2">
+              <a href="#" class="btn btn-outline-info">JOIN</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 bg-cover" style="background-image: url(images/s11-1.jpg);">
+        <div class="row justify-content-center p-5">
+          <div class="col-md-9 s11_text m-4 p-3">
+            <small class="badge text-info">JOIN US</small>
+            <h2 class="fw-400 m-2">展場工讀生</h2>
+            <ul class="fw-300">
+              <li>解答查詢：回答訪客或參展商的問題，包括展覽活動的日程、參展商信息或其他常見問題。</li>
+              <li>指引方向：協助訪客找到感興趣的展位，或引導到洽談室、休息區、洗手間等場所。</li>
+              <li>處理突發情況：應對任何突發狀況，如訪客失物、註冊問題或其他緊急事件。</li>
+              <li>收集反饋：收集訪客的反饋或評價，以改善未來的展覽體驗。</li><br><br>
+            </ul>
+            <div class="text-end mx-2">
+              <a href="#" class="btn btn-outline-info">JOIN</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- s12 footer -->
+  <section>
+    <div class="container text-left mb-5">
+      <ul class="nav">
+        <li class="nav-item">
+        <li class="nav-item">
+          <a class="nav-link disabled text-dark" aria-current="page"><small>Power By Alicia.202308</small></a>
+      </ul>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+
+  <!-- Counter-Up2 -->
+  <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js">	</script>
+  <script>
+    const counterUp = window.counterUp.default
+
+    const callback = entries => {
+      entries.forEach(entry => {
+        const el = entry.target
+        if (entry.isIntersecting && !el.classList.contains('is-visible')) {
+          counterUp(el, {
+            duration: 5000,
+            delay: 16,
+          })
+          el.classList.add('is-visible')
+        }
+      })
+    }
+
+    const IO = new IntersectionObserver(callback, { threshold: 1 })
+
+    const el01 = document.querySelector('.counter01')
+    IO.observe(el01)
+
+    const el02 = document.querySelector('.counter02')
+    IO.observe(el02)
+
+    const el03 = document.querySelector('.counter03')
+    IO.observe(el03)
+
+    const el04 = document.querySelector('.counter04')
+    IO.observe(el04)
+  </script>
+</body>
+
+</html>
